@@ -1,7 +1,8 @@
-<%= form_with(model: movie) do |form| %>
+
+<%= form_with(model: movie, html: { class: "movie-form" }) do |form| %>
   <% if movie.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+    <div class="form-errors">
+      <h2><%= pluralize(movie.errors.count, "error") %> prevented this movie from being saved:</h2>
 
       <ul>
         <% movie.errors.each do |error| %>
@@ -11,27 +12,28 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="form-field">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :rating, style: "display: block" %>
-    <%= form.text_field :rating %>
+  <div class="form-field">
+    <%= form.label :rating %>
+    <%= form.text_field :rating, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
+  <div class="form-field">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 4, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :release_date, style: "display: block" %>
-    <%= form.text_field :release_date %>
+  <div class="form-field">
+    <%= form.label :release_date %>
+    <%= form.date_field :release_date, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="button-row">
+    <%= form.submit class: "button button-primary" %>
+    <%= link_to "Cancel", movies_path, class: "button button-secondary" %>
   </div>
 <% end %>

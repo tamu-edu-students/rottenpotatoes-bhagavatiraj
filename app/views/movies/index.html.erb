@@ -1,54 +1,77 @@
 
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Movies" %>
+
+<% current_sort = %w[title rating release_date].include?(params[:sort]) ? params[:sort] : "title" %>
+<% current_direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc" %>
+
+<% title_direction = current_sort == "title" && current_direction == "asc" ? "desc" : "asc" %>
+<% rating_direction = current_sort == "rating" && current_direction == "asc" ? "desc" : "asc" %>
+<% release_date_direction = current_sort == "release_date" && current_direction == "asc" ? "desc" : "asc" %>
+
+<% if notice.present? %>
+  <p class="notice"><%= notice %></p>
+<% end %>
 
 <h1>RottenPotatoes Movies</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th class="<%= 'sorted' if params[:sort] == 'title' || params[:sort].blank? %>">
-  <%= link_to "Title", movies_path(sort: "title", direction: params[:sort] == "title" && params[:direction] == "asc" ? "desc" : "asc") %>
-  <%= params[:sort] == "title" || params[:sort].blank? ? (params[:direction] == "desc" ? "▼" : "▲") : "" %>
-</th>
+<div class="page-actions">
+  <%= link_to "Add New Movie", new_movie_path, class: "button button-primary" %>
+</div>
 
-<th class="<%= 'sorted' if params[:sort] == 'rating' %>">
-  <%= link_to "Rating", movies_path(sort: "rating", direction: params[:sort] == "rating" && params[:direction] == "asc" ? "desc" : "asc") %>
-  <%= params[:sort] == "rating" ? (params[:direction] == "desc" ? "▼" : "▲") : "" %>
-</th>
-
-<th class="<%= 'sorted' if params[:sort] == "release_date" %>">
-  <%= link_to "Release Date", movies_path(sort: "release_date", direction: params[:sort] == "release_date" && params[:direction] == "asc" ? "desc" : "asc") %>
-  <%= params[:sort] == "release_date" ? (params[:direction] == "desc" ? "▼" : "▲") : "" %>
-</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @movies.each do |movie| %>
+<div class="table-container">
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to movie.title, movie %></td>
-        <td><%= movie.rating %></td>
-        <td><%= movie.release_date&.strftime("%d %b %Y") %></td>
-        
-        <td class="actions">
-          <%= link_to "Edit", edit_movie_path(movie) %>
-          <%= button_to "Delete", movie, method: :delete,
-                form: { data: { turbo_confirm: "Are you sure?" } } %>
-        </td>
+        <th class="<%= 'sorted' if current_sort == 'title' %>"
+            aria-sort="<%= current_sort == 'title' ? (current_direction == 'asc' ? 'ascending' : 'descending') : 'none' %>">
+          <%= link_to movies_path(sort: "title", direction: title_direction), class: "sort-link" do %>
+            Title
+            <span class="sort-indicator" aria-hidden="true"><%= current_sort == "title" ? (current_direction == "asc" ? "▲" : "▼") : "↕" %></span>
+          <% end %>
+        </th>
 
+        <th class="<%= 'sorted' if current_sort == 'rating' %>"
+            aria-sort="<%= current_sort == 'rating' ? (current_direction == 'asc' ? 'ascending' : 'descending') : 'none' %>">
+          <%= link_to movies_path(sort: "rating", direction: rating_direction), class: "sort-link" do %>
+            Rating
+            <span class="sort-indicator" aria-hidden="true"><%= current_sort == "rating" ? (current_direction == "asc" ? "▲" : "▼") : "↕" %></span>
+          <% end %>
+        </th>
+
+        <th class="<%= 'sorted' if current_sort == 'release_date' %>"
+            aria-sort="<%= current_sort == 'release_date' ? (current_direction == 'asc' ? 'ascending' : 'descending') : 'none' %>">
+          <%= link_to movies_path(sort: "release_date", direction: release_date_direction), class: "sort-link" do %>
+            Release Date
+            <span class="sort-indicator" aria-hidden="true"><%= current_sort == "release_date" ? (current_direction == "asc" ? "▲" : "▼") : "↕" %></span>
+          <% end %>
+        </th>
+
+        <th>Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-  
+    </thead>
 
-  <tfoot>
-    <tr>
-      <td colspan="4">Total movies: <%= @movies.size %></td>
-    </tr>
-  </tfoot>
-</table>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr>
+          <td><%= link_to movie.title, movie %></td>
+          <td><%= movie.rating %></td>
+          <td><%= movie.release_date&.strftime("%d %b %Y") %></td>
 
-<p><%= link_to "Add New Movie", new_movie_path %></p>
+          <td class="actions">
+            <%= link_to "Edit", edit_movie_path(movie), class: "button button-small button-secondary" %>
+            <%= button_to "Delete", movie,
+                  method: :delete,
+                  class: "button button-small button-danger",
+                  form: { class: "inline-form", data: { turbo_confirm: "Are you sure you want to delete this movie?" } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td colspan="4">Total movies: <%= @movies.size %></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

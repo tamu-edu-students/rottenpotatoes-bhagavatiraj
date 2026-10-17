@@ -1,44 +1,21 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
 
-/* Basic page layout */
+/* General page styling */
 body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  background: #f8fafc;
+  color: #253047;
   font-family: Arial, sans-serif;
-  margin: 30px;
-  color: #333;
+  line-height: 1.5;
 }
 
-/* Movies table */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
+h1 {
+  margin-bottom: 24px;
+  color: #172b4d;
+  font-size: 30px;
 }
 
-th,
-td {
-  padding: 12px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-/* Links and buttons */
 a {
   color: #1769aa;
   text-decoration: none;
@@ -48,57 +25,289 @@ a:hover {
   text-decoration: underline;
 }
 
-td form {
-  display: inline;
+/* Notifications */
+.notice {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border: 1px solid #a7dfc0;
+  border-radius: 8px;
+  background: #ecfdf3;
+  color: #17663a;
 }
 
+/* Page actions and reusable buttons */
+.page-actions,
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.button,
 button,
 input[type="submit"] {
-  padding: 6px 10px;
-  margin: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 36px;
+  padding: 8px 13px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Movie count */
-tfoot {
-  font-weight: bold;
+.button:hover,
+button:hover,
+input[type="submit"]:hover {
+  text-decoration: none;
 }
 
+.button-primary {
+  background: #1769aa;
+  color: #fff;
+}
 
-.actions {
+.button-primary:hover {
+  background: #125487;
+}
+
+.button-secondary {
+  border-color: #cbd5e1;
+  background: #fff;
+  color: #334155;
+}
+
+.button-secondary:hover {
+  background: #f1f5f9;
+}
+
+.button-danger {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+.button-danger:hover {
+  background: #ffe4e6;
+}
+
+.button-small {
+  min-height: 32px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.inline-form {
+  display: inline-block;
+  margin: 0;
+}
+
+/* Movies table */
+.table-container {
+  overflow-x: auto;
+  margin: 20px 0;
+  border: 1px solid #dbe3ed;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgb(15 23 42 / 5%);
+}
+
+table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+th,
+td {
+  padding: 13px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  background: #edf2f7;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+tbody tr {
+  background: #fff;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+tbody tr:hover {
+  background: #eff6ff;
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+td.actions {
   white-space: nowrap;
 }
 
-.actions form {
-  display: inline-block;
-  margin: 0 0 0 8px;
+.actions .inline-form {
+  margin-left: 5px;
 }
 
-.actions a,
-.actions input[type="submit"] {
-  display: inline-block;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  color: #333;
-  font-size: 14px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.actions a:hover,
-.actions input[type="submit"]:hover {
-  background-color: #e5e5e5;
-}
-
-
-/* Highlight the currently sorted column header */
+/* Sortable table headers */
 th.sorted {
-  background-color: #d9eaf7;
+  background: #dcecfb;
+  box-shadow: inset 0 -3px 0 #2878b8;
 }
 
-th.sorted a {
+.sort-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #334155;
+}
+
+th.sorted .sort-link {
   color: #174a70;
-  font-weight: bold;
+  font-weight: 700;
+}
+
+.sort-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: #e2e8f0;
+  color: #64748b;
+  font-size: 11px;
+}
+
+th.sorted .sort-indicator {
+  background: #c0ddf5;
+  color: #174a70;
+}
+
+/* Movie count */
+tfoot td {
+  border-bottom: 0;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Movie details */
+.movie-details {
+  margin: 20px 0;
+  padding: 22px;
+  border: 1px solid #dbe3ed;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgb(15 23 42 / 5%);
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+  overflow-wrap: anywhere;
+}
+
+.detail-row:first-child {
+  padding-top: 0;
+}
+
+.detail-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.detail-row strong {
+  color: #475569;
+}
+
+/* Movie forms */
+.movie-form {
+  max-width: 620px;
+  padding: 24px;
+  border: 1px solid #dbe3ed;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgb(15 23 42 / 5%);
+}
+
+.form-field {
+  margin-bottom: 18px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 6px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.form-input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+  color: #253047;
+  font: inherit;
+}
+
+.form-input:focus {
+  border-color: #2878b8;
+  outline: 3px solid rgb(40 120 184 / 15%);
+}
+
+.form-errors {
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  border: 1px solid #fecdd3;
+  border-radius: 8px;
+  background: #fff1f2;
+  color: #9f1239;
+}
+
+/* Smaller screens */
+@media (max-width: 600px) {
+  body {
+    padding: 20px 12px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .detail-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .movie-form {
+    padding: 16px;
+  }
 }

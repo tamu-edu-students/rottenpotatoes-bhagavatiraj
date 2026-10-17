@@ -1,22 +1,22 @@
-<div id="<%= dom_id movie %>">
-  <div>
-    <strong>Title:</strong>
-    <%= movie.title %>
+
+<div id="<%= dom_id movie %>" class="movie-details">
+  <div class="detail-row">
+    <strong>Title</strong>
+    <span><%= movie.title %></span>
   </div>
 
-  <div>
-    <strong>Rating:</strong>
-    <%= movie.rating %>
+  <div class="detail-row">
+    <strong>Rating</strong>
+    <span><%= movie.rating %></span>
   </div>
 
-  <div>
-    <strong>Description:</strong>
-    <%= movie.description %>
+  <div class="detail-row">
+    <strong>Description</strong>
+    <span><%= movie.description.presence || "No description available." %></span>
   </div>
 
-  <div>
-    <strong>Release date:</strong>
-    <%= movie.release_date %>
+  <div class="detail-row">
+    <strong>Release date</strong>
+    <span><%= movie.release_date&.strftime("%d %b %Y") || "Not specified" %></span>
   </div>
-
 </div>
